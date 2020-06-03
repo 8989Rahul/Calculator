@@ -18,15 +18,18 @@ const styles = StyleSheet.create({
   },
 });
 
+function formatNumber(num) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
 export default class App extends React.Component {
   state = {
-    currentValue: "0",
+    currentValue: 0,
   };
 
   handleTap = (type, value) => {
     this.setState((state) => {
       if (type === "number") {
-        if (state.currentValue === "0") {
+        if (state.currentValue === 0) {
           return { currentValue: `${value}` };
         }
         return { currentValue: `${state.currentValue}${value}` };
@@ -36,16 +39,18 @@ export default class App extends React.Component {
   };
 
   render() {
+    console.log(parseFloat(this.state.currentValue).toLocaleString());
+
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <SafeAreaView>
           <Text style={styles.value}>
-            {parseFloat(this.state.currentValue).toLocaleString()}
+            {formatNumber(this.state.currentValue)}
           </Text>
 
           <Row>
-            <Button text="c" theme="secondary" onPress={() => alert("todo")} />
+            <Button text="C" theme="secondary" onPress={() => alert("todo")} />
             <Button
               text="+/-"
               theme="secondary"
