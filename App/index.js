@@ -19,10 +19,6 @@ const styles = StyleSheet.create({
   },
 });
 
-function formatNumber(num) {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-}
-
 export default class App extends React.Component {
   state = initialState;
 
@@ -38,7 +34,9 @@ export default class App extends React.Component {
         <StatusBar barStyle="light-content" />
         <SafeAreaView>
           <Text style={styles.value}>
-            {formatNumber(this.state.currentValue)}
+            {parseFloat(this.state.currentValue)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Text>
 
           <Row>
